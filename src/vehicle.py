@@ -1,4 +1,6 @@
-class Vehicle:
+from abc import ABC, abstractmethod
+
+class Vehicle(ABC):
     def __init__(self, vehicle_id, model, battery_percentage):
         self.vehicle_id = vehicle_id
         self.model = model
@@ -31,14 +33,22 @@ class Vehicle:
     def set_maintenance_status(self, maintenance_status):
         self.__maintenance_status = maintenance_status
 
-    
+    @abstractmethod
+    def calculate_trip_cost(self, distance):
+        pass
 class ElectriCar(Vehicle):
-    def __init__(self, vehicle_id, model, battery_percentage, seating_capacity):
+    def __init__(self, vehicle_id, model, battery_percentage, _seating_capacity):
         super().__init__(vehicle_id, model, battery_percentage)
-        self.seating_capacity = seating_capacity
+        self.seating_capacity = _seating_capacity
+    def calculate_trip_cost(self, distance):
+        return 5.0 + (0.50 * distance)
 
 class ElectricScooter(Vehicle):
     def __init__(self, vehicle_id, model, battery_percentage, max_speed_limit):
         super().__init__(vehicle_id, model, battery_percentage)
-        self.max_speed_limit = max_speed_limit
-        
+        self.max_speed_limit= max_speed_limit
+
+    def calculate_trip_cost(self, distance):
+        return 1.0 + (0.15 * distance)
+
+    
