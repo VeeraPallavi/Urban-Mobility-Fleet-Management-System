@@ -20,6 +20,21 @@ class FleetManager:
             return 
         
         self.hubs[hub_name].append(vehicle)
-
-    def get_vehicles_by_hub(self, hub_name):
+    
+    def search_by_hub(self, hub_name):
         return self.hubs.get(hub_name, [])
+    
+    def search_by_percentage(self, battery):
+        for hub, vehicles in self.hubs.items():
+            vehicle = list(filter(lambda v : v.get_battery_percentage() > battery, vehicles))
+            found = False 
+            for v in vehicle:
+                if not found :
+                    print(f" Vehicle with battery percentage > 80 found in hub {hub}")
+                    found = True
+                    print(f"Vehicle id : {v.vehicle_id}")
+                    print(f"Model: {v.model}")
+                    print(f"Battery Percentage : {v.get_battery_percentage()}")
+
+            if not found:
+                print("Vehicle not found")
