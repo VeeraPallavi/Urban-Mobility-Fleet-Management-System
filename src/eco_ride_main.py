@@ -9,7 +9,7 @@ class EcoRideMain:
         fleet_manager = FleetManager()
         
         while True:
-
+            
             choice = input ("Enter choice: ")
 
             if choice == "1":
