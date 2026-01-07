@@ -12,13 +12,13 @@ class FleetManager:
         if hub_name not in self.hubs:
             print(f"Hub '{hub_name}' does not exist")
             return
-        
-        duplicate_vehicles = [v for v in self.hubs[hub_name] if v == vehicle]
 
-        if duplicate_vehicles:
-            print("Duplicate Veicle id found ")
-            return 
-        
+        duplicates = [v for v in self.hubs[hub_name] if v == vehicle]
+
+        if duplicates:
+            print(f"Duplicate Vehicle ID '{vehicle.vehicle_id}' not allowed in hub '{hub_name}'")
+            return
+
         self.hubs[hub_name].append(vehicle)
     
     def search_by_hub(self, hub_name):
@@ -38,3 +38,14 @@ class FleetManager:
 
             if not found:
                 print("Vehicle not found")
+    def catogarize_vehicles(self):
+        category = {}
+        for vehicles in self.hubs.values():
+            for vehicle in vehicles:
+                vehicle_type = type(vehicle).__name__
+                if vehicle_type not in category:
+                    category[vehicle_type] = []
+                else:
+                    category[vehicle_type].append(vehicle)
+        return category
+    

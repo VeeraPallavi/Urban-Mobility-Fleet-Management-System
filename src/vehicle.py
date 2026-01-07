@@ -7,7 +7,7 @@ class Vehicle(ABC):
         self.__battery_percentage = 0
         self.__maintenance_status = None
         self.__rental_price = None 
-        
+
         self.set_battery_percentage(battery_percentage)
 
     def get_battery_percentage(self):
@@ -37,6 +37,11 @@ class Vehicle(ABC):
     def calculate_trip_cost(self, distance):
         pass
 
+    def __eq__(self, other):
+        if not isinstance(other, Vehicle):
+            return False
+        return self.vehicle_id == other.vehicle_id
+    
     def display(self):
         print(f"Vehicle Id : {self.vehicle_id}")
         print(f"Model : {self.model}")

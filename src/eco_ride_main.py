@@ -9,14 +9,15 @@ class EcoRideMain:
         fleet_manager = FleetManager()
         
         while True:
-            
-            choice = input ("Enter choice: ")
 
             print("1. Add Hub")
             print("2. Add Vehicle to hub")
             print("3. search vehicles by hub")
             print("4. Seach by battery_percentage")
-
+            print("5. Cataogerize vehicles")
+            print("6. Exit")
+            
+            choice = input ("Enter choice: ")
 
             if choice == "1":
                 hub_name = input("Enter hub name : ")
@@ -37,7 +38,7 @@ class EcoRideMain:
     
                 elif vehicle_type == "ElectricScooter":
                     max_speed_limit = int(input("Enter Maximum Speed Limit"))
-                    Vehicle = ElectricScooter(vehicle_id, model, battery, max_speed_limit)
+                    vehicle = ElectricScooter(vehicle_id, model, battery, max_speed_limit)
                     fleet_manager.add_vehicle_to_hub(hub_name, vehicle)
                 
                 else:
@@ -59,9 +60,20 @@ class EcoRideMain:
             
             elif choice == "4":
                 fleet_manager.search_by_percentage(80)
-
+            
             elif choice == "5":
-                print("Exiting Eco-Ride System")
+                category = fleet_manager.catogarize_vehicles()
+                if not category:
+                    print("No Vehicles found")
+                else:
+                    for vehicle_type, vehicle in category.items():
+                        print(f"{vehicle_type} : ")
+                        for v in vehicle:
+                            print(f"Vehicle_id : {v.vehicle_id} Vechile_model : {v.model}")
+    
+
+            elif choice == "6":
+                print("Exit")
                 break                
                 
 
