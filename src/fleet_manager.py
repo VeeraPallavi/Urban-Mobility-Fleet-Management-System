@@ -63,6 +63,10 @@ class FleetManager:
                     status[maintenance_status] += 1
                 
         return status
+    
+    def sort_by_model(self, hub_name):
+        vehicles = self.hubs.get(hub_name, [])
 
+        return sorted(vehicles, key = lambda v : v.model)
 
 
