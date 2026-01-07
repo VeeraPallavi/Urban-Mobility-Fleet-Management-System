@@ -8,3 +8,4 @@ class EcoRideMain:
     
 if __name__ == "__main__":
     EcoRideMain.main()
+    
