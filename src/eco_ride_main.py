@@ -16,7 +16,8 @@ class EcoRideMain:
             print("4. Seach by battery_percentage")
             print("5. Cataogerize vehicles")
             print("6. Count_status")
-            print("7. Exit")
+            print("7. Sort by model")
+            print("8. Exit")
             
             choice = input ("Enter choice: ")
 
@@ -84,8 +85,17 @@ class EcoRideMain:
                 
                 for maintain_status, count in status.items():
                     print(f"{maintain_status} : {count}")
-
+            
             elif choice == "7":
+                hub_name = input("Enter hub name")
+                vehicles = fleet_manager.sort_by_model(hub_name)
+
+                if not vehicles:
+                    print("Vehicle not found or hub does not exist ")
+                for v in vehicles:
+                    print(v)
+
+            elif choice == "8":
                 print("Exit")
                 break                
                 
