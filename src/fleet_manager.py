@@ -45,7 +45,24 @@ class FleetManager:
                 vehicle_type = type(vehicle).__name__
                 if vehicle_type not in category:
                     category[vehicle_type] = []
-                else:
-                    category[vehicle_type].append(vehicle)
+             
+                category[vehicle_type].append(vehicle)
         return category
     
+    def count_status(self):
+        status = {
+            'Available' : 0,
+            'On Trip' : 0, 
+            'Under Maintainence' : 0
+        }
+
+        for vehicles in self.hubs.values():
+            for vehicle in vehicles :
+                maintenance_status = vehicle.get_maintenance_status()
+                if maintenance_status in status:
+                    status[maintenance_status] += 1
+                
+        return status
+
+
+
