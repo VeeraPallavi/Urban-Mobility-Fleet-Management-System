@@ -1,4 +1,3 @@
-
 from abc import ABC, abstractmethod
 
 class Vehicle(ABC):
@@ -8,7 +7,7 @@ class Vehicle(ABC):
         self.__battery_percentage = 0
         self.__maintenance_status = None
         self.__rental_price = None 
-
+        
         self.set_battery_percentage(battery_percentage)
 
     def get_battery_percentage(self):
@@ -37,6 +36,12 @@ class Vehicle(ABC):
     @abstractmethod
     def calculate_trip_cost(self, distance):
         pass
+
+    def display(self):
+        print(f"Vehicle Id : {self.vehicle_id}")
+        print(f"Model : {self.model}")
+        print(f"Battery Percentage : {self.__battery_percentage}%")
+
 class ElectricCar(Vehicle):
     def __init__(self, vehicle_id, model, battery_percentage, seating_capacity):
         super().__init__(vehicle_id, model, battery_percentage)
