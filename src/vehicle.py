@@ -47,6 +47,10 @@ class Vehicle(ABC):
         print(f"Model : {self.model}")
         print(f"Battery Percentage : {self.__battery_percentage}%")
 
+    def __str__(self):
+        return f"Vehicle ID : {self.vehicle_id} \nModel : {self.model}\n Battery_percentage : {self.__battery_percentage}%"
+    
+
 class ElectricCar(Vehicle):
     def __init__(self, vehicle_id, model, battery_percentage, seating_capacity):
         super().__init__(vehicle_id, model, battery_percentage)

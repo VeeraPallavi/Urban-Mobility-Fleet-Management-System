@@ -68,5 +68,15 @@ class FleetManager:
         vehicles = self.hubs.get(hub_name, [])
 
         return sorted(vehicles, key = lambda v : v.model)
+    
+    def sort_by_battery_percentage(self, hub_name):
+        vehicles = self.hubs.get(hub_name, [])
 
+        return sorted(vehicles, key = lambda v : v.get_battery_percentage(), reverse = True)
+    
+    def sort_by_rental_price(self, hub_name):
+        vehicles = self.hubs.get(hub_name, [])
+        
+        return sorted(vehicles, key = lambda v : v.get_rental_price(), reverse = True)
+    
 
