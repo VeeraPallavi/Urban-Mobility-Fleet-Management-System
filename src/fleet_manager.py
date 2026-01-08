@@ -1,3 +1,7 @@
+import csv
+from vehicle import ElectricCar, ElectricScooter
+
+
 class FleetManager:
     def __init__(self):
         self.hubs = {}
@@ -76,7 +80,67 @@ class FleetManager:
     
     def sort_by_rental_price(self, hub_name):
         vehicles = self.hubs.get(hub_name, [])
-        
+
         return sorted(vehicles, key = lambda v : v.get_rental_price(), reverse = True)
     
+    def save_to_csv_file(self, filename):
+        with open(filename, "w", newline = "") as file:
+            write = csv.writer(file)
 
+            write.writerow([
+                "Hub", 
+                "Vehicle Type",
+                "Vehicle ID",
+                "Model",
+                "Battery Percentage",
+                "Maintananence Status",
+                "Rental Price",
+                "Seating Capacity / Maximum Speed Limit"
+            ])
+            for hub, vehicles in self.hubs.items():
+                for vehicle in vehicles:
+                    if isinstance(vehicle, ElectricCar):
+                        value = vehicle.seating_capacity
+                    else:
+                        value = vehicle.max_speed_limit
+
+                    write.writerow([
+                        hub,
+                        vehicle.__class__.__name__,
+                        vehicle.vehicle_id,
+                        vehicle.model,
+                        vehicle.get_battery_percentage(),
+                        vehicle.get_maintenance_status(),
+                        vehicle.get_rental_price(),
+                        value
+                    ])        
+    
+    def load_from_csv(self, filename):
+        
+        with open(filename, "r", newline = "") as file:
+            read = csv.DictReader(file)
+            for line in read:
+                hub = line["Hub"]
+                vehicle_type = line["Vehicle Type"]
+                vehicle_id = line["Vehicle ID"]
+                model = line["Model"]
+                battery_percentage = int(line["Battery Percentage"])
+                maintenance_status = line["Maintananence Status"]
+                rental_price = line["Rental Price"]
+                value = line["Seating Capacity / Maximum Speed Limit"]
+
+                if hub not in self.hubs:
+                    self.hubs[hub] = []
+            
+                if vehicle_type == "ElectricCar":
+                    vehicle = ElectricCar(vehicle_id, model, battery_percentage, value)
+                    
+            
+                elif vehicle_type == "ElectricScooter":
+                    vehicle = ElectricScooter(vehicle_id, model, battery_percentage, value)
+                
+                vehicle.set_maintenance_status(maintenance_status)
+                vehicle.set_rental_price(rental_price)
+                self.hubs[hub].append(vehicle)
+
+                

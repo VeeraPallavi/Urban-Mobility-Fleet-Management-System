@@ -17,8 +17,10 @@ class EcoRideMain:
             print("5. Cataogerize vehicles")
             print("6. Count_status")
             print("7. Sort by model")
-            print("8. Sort by Battery Percentage")
-            print("9. Exit")
+            print("8. Sort by Battery Percentage / Rental Price")
+            print("9.Save data to csv file")
+            print("10. Load from csv file")
+            print("11. Exit")
             
             choice = input ("Enter choice: ")
 
@@ -28,18 +30,18 @@ class EcoRideMain:
             
             elif choice == "2":
                 hub_name = input("Enter hub name : ")
-                vehicle_type = input("Enter Vehicle(Car/Scooter) : ")
+                vehicle_type = input("Enter Vehicle(ElectricCar/ElectricScooter) : ")
 
                 vehicle_id = input("Enter Vehicle ID: ")
                 model = input("Enter Model Name: ")
                 battery = int(input("Enter Battery Percentage: "))
                 
                 if vehicle_type == "ElectricCar":
-                    seating_capacity = int(input("Enter maximum seating Capaicty"))
+                    seating_capacity = int(input("Enter maximum seating Capaicty: "))
                     vehicle = ElectricCar(vehicle_id, model, battery, seating_capacity)
     
                 elif vehicle_type == "ElectricScooter":
-                    max_speed_limit = int(input("Enter Maximum Speed Limit"))
+                    max_speed_limit = int(input("Enter Maximum Speed Limit: "))
                     vehicle = ElectricScooter(vehicle_id, model, battery, max_speed_limit)
                 
                 else:
@@ -48,16 +50,16 @@ class EcoRideMain:
                 maintan_status = ["Available", "On Trip", "Under Maintanence"]
                 status = input("Enter Maintanence Status :")
                 if status not in  maintan_status:
-                    print("Invalid Status")
+                    print("Invalid Status... Default status Avaliable is assigned")
                     vehicle.set_maintenance_status("Available")
         
                 vehicle.set_maintenance_status(status)
-                price = int(input("Enter Rental Price : "))
+                price = int(input("Enter Rental Price: "))
                 vehicle.set_rental_price(price)
                 fleet_manager.add_vehicle_to_hub(hub_name, vehicle)
 
             elif choice == "3":
-                hub_name = input("Enter hub name : ")
+                hub_name = input("Enter hub name: ")
 
                 vehicles = fleet_manager.search_by_hub(hub_name)
 
@@ -69,6 +71,8 @@ class EcoRideMain:
                         print(f"Vehicle id : {v.vehicle_id}")
                         print(f"Model: {v.model}")
                         print(f"Battery Percentage : {v.get_battery_percentage()}")
+                        print(f"Maintanence Status : {v.get_maintenance_status()}")
+                        print(f"Rental Price : {v.get_rental_price()}")
             
             elif choice == "4":
                 fleet_manager.search_by_percentage(80)
@@ -90,7 +94,7 @@ class EcoRideMain:
                     print(f"{maintain_status} : {count}")
             
             elif choice == "7":
-                hub_name = input("Enter hub name")
+                hub_name = input("Enter hub name : ")
                 vehicles = fleet_manager.sort_by_model(hub_name)
 
                 if not vehicles:
@@ -99,7 +103,7 @@ class EcoRideMain:
                     print(v)
 
             elif choice == "8":
-                hub_name = input("Enter hub name")
+                hub_name = input("Enter hub name: ")
                 print("1.Sort based on battery Percentage ")
                 print("2.Sort based on rental price")
                 print("3.Exit")
@@ -121,6 +125,7 @@ class EcoRideMain:
                     print("Vehicles Sorted based on rental price ")
                     for v in vehicles :
                         print(v)
+
                 elif ch == "3":
                     print("Exit")
                     break
@@ -128,6 +133,19 @@ class EcoRideMain:
                     print("Please Enter valid choice ")
 
             elif choice == "9":
+                filename = input("Enter File name :")
+                fleet_manager.save_to_csv_file(filename)
+            
+            elif choice == "10":
+                filename = input("Enter File Name : ")
+                try :
+                    fleet_manager.load_from_csv(filename)
+                    print("Data loaded Successfully")
+                except FileNotFoundError :
+                    print("Invalid filename...Please enter correct filename")
+                
+
+            elif choice == "11":
                 print("Exit")
                 break                
                 
