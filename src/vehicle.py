@@ -14,7 +14,7 @@ class Vehicle(ABC):
         return self.__battery_percentage
     
     def set_battery_percentage(self, battery_percentage):
-        if 0<= battery_percentage <= 100:
+        if 0 <= battery_percentage <= 100:
             self.__battery_percentage = battery_percentage
         else:
             print("Invalid battery Percentage . Enter valid percentage...")
