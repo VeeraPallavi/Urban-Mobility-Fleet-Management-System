@@ -17,7 +17,8 @@ class EcoRideMain:
             print("5. Cataogerize vehicles")
             print("6. Count_status")
             print("7. Sort by model")
-            print("8. Exit")
+            print("8. Sort by Battery Percentage")
+            print("9. Exit")
             
             choice = input ("Enter choice: ")
 
@@ -51,6 +52,8 @@ class EcoRideMain:
                     vehicle.set_maintenance_status("Available")
         
                 vehicle.set_maintenance_status(status)
+                price = int(input("Enter Rental Price : "))
+                vehicle.set_rental_price(price)
                 fleet_manager.add_vehicle_to_hub(hub_name, vehicle)
 
             elif choice == "3":
@@ -96,6 +99,35 @@ class EcoRideMain:
                     print(v)
 
             elif choice == "8":
+                hub_name = input("Enter hub name")
+                print("1.Sort based on battery Percentage ")
+                print("2.Sort based on rental price")
+                print("3.Exit")
+
+                ch = input("Enter your choice to sort : ")
+
+                if ch == "1":
+                    vehicles = fleet_manager.sort_by_battery_percentage(hub_name)
+                    if not vehicles:
+                        print("Vehicle not found or hub does not exist ")
+                    print ("Vehicles sorted based on battery Percenatge ")
+                    for v in vehicles:
+                        print(v)
+                
+                elif ch == "2":
+                    vehicles = fleet_manager.sort_by_rental_price(hub_name)
+                    if not vehicles:
+                        print("Vehicle no found or hub does not exist")
+                    print("Vehicles Sorted based on rental price ")
+                    for v in vehicles :
+                        print(v)
+                elif ch == "3":
+                    print("Exit")
+                    break
+                else :
+                    print("Please Enter valid choice ")
+
+            elif choice == "9":
                 print("Exit")
                 break                
                 
