@@ -14,7 +14,7 @@ class Vehicle(ABC):
         return self.__battery_percentage
     
     def set_battery_percentage(self, battery_percentage):
-        if 0<= battery_percentage <= 100:
+        if 0 <= battery_percentage <= 100:
             self.__battery_percentage = battery_percentage
         else:
             print("Invalid battery Percentage . Enter valid percentage...")
@@ -48,7 +48,7 @@ class Vehicle(ABC):
         print(f"Battery Percentage : {self.__battery_percentage}%")
 
     def __str__(self):
-        return f"Vehicle ID : {self.vehicle_id} \nModel : {self.model}\n Battery_percentage : {self.__battery_percentage}%"
+        return f"Vehicle ID : {self.vehicle_id} \nModel : {self.model}\nBattery_percentage : {self.__battery_percentage}%"
     
 
 class ElectricCar(Vehicle):

@@ -1,4 +1,5 @@
 import csv
+import json
 from vehicle import ElectricCar, ElectricScooter
 
 
@@ -126,7 +127,7 @@ class FleetManager:
                 model = line["Model"]
                 battery_percentage = int(line["Battery Percentage"])
                 maintenance_status = line["Maintananence Status"]
-                rental_price = line["Rental Price"]
+                rental_price = (line["Rental Price"])
                 value = line["Seating Capacity / Maximum Speed Limit"]
 
                 if hub not in self.hubs:
@@ -140,7 +141,61 @@ class FleetManager:
                     vehicle = ElectricScooter(vehicle_id, model, battery_percentage, value)
                 
                 vehicle.set_maintenance_status(maintenance_status)
-                vehicle.set_rental_price(rental_price)
+                vehicle.set_rental_price(int(rental_price))
                 self.hubs[hub].append(vehicle)
+    
+    def save_data_to_json_file(self, filename):
 
+        data = {}
+        for hub, vehicles in self.hubs.items():
+            data[hub] = []
+            for vehicle in vehicles:
+                vehicle_data = {
+                "vehicle_type": vehicle.__class__.__name__,
+                "vehicle_id": vehicle.vehicle_id,
+                "model": vehicle.model,
+                "battery_percentage": vehicle.get_battery_percentage(),
+                "maintenance_status": vehicle.get_maintenance_status(),
+                "rental_price": vehicle.get_rental_price()
+            }
+
+                if isinstance(vehicle, ElectricCar):
+                    vehicle_data["seating_capacity"] = vehicle.seating_capacity
+                else:
+                    vehicle_data["max_speed_limit"] = vehicle.max_speed_limit
+
+                data[hub].append(vehicle_data)
+        
+        with open(filename, "w") as json_file:
+            json.dump(data, json_file, indent = 4)
+    
+    def load_from_json_file(self, filename):
+        
+        with open(filename, "r") as file:
+            data = json.load(file)
+
+        for hub, vehicles in data.items():
+            if hub not in self.hubs:
+                self.hubs[hub] = []
+
+            for v in vehicles:
+                if v["vehicle_type"] == "ElectricCar":
+                    vehicle = ElectricCar(
+                        v["vehicle_id"],
+                        v["model"],
+                        v["seating_capacity"],
+                        int(v["battery_percentage"])
+                    )
+
+                elif v["vehicle_type"] == "ElectricScooter":
+                    vehicle = ElectricScooter(
+                        v["vehicle_id"],
+                        v["model"],
+                        v["max_speed_limit"],
+                        int(v["battery_percentage"])
+                    )
+
+                vehicle.set_maintenance_status(v["maintenance_status"])
+                vehicle.set_rental_price(int(v["rental_price"]))
                 
+                self.hubs[hub].append(vehicle)
