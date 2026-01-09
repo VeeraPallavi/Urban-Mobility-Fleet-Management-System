@@ -1,0 +1,33 @@
+{
+  "Downtown": [
+    {
+      "vehicle_type": "ElectricCar",
+      "vehicle_id": "101",
+      "model": "Tesla",
+      "battery_percentage": 89,
+      "maintenance_status": "Available",
+      "rental_price": 4000,
+      "seating_capacity": 5
+    },
+    {
+      "vehicle_type": "ElectricScooter",
+      "vehicle_id": "201",
+      "model": "GT650",
+      "battery_percentage": 76,
+      "maintenance_status": "On Trip",
+      "rental_price": 2000,
+      "max_speed_limit": 80
+    }
+  ],
+  "Airport": [
+    {
+      "vehicle_type": "ElectricCar",
+      "vehicle_id": "102",
+      "model": "BMW",
+      "battery_percentage": 77,
+      "maintenance_status": "Under Maintanence",
+      "rental_price": 70000,
+      "seating_capacity": 5
+    }
+  ]
+}
