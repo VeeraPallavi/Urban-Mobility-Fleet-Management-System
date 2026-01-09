@@ -48,7 +48,7 @@ class Vehicle(ABC):
         print(f"Battery Percentage : {self.__battery_percentage}%")
 
     def __str__(self):
-        return f"Vehicle ID : {self.vehicle_id} \nModel : {self.model}\n Battery_percentage : {self.__battery_percentage}%"
+        return f"Vehicle ID : {self.vehicle_id} \nModel : {self.model}\nBattery_percentage : {self.__battery_percentage}%"
     
 
 class ElectricCar(Vehicle):

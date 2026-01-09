@@ -18,9 +18,11 @@ class EcoRideMain:
             print("6. Count_status")
             print("7. Sort by model")
             print("8. Sort by Battery Percentage / Rental Price")
-            print("9.Save data to csv file")
+            print("9. Save data to csv file")
             print("10. Load from csv file")
-            print("11. Exit")
+            print("11. Save data to json File")
+            print("12. Load data from json File")
+            print("13. Exit")
             
             choice = input ("Enter choice: ")
 
@@ -52,8 +54,8 @@ class EcoRideMain:
                 if status not in  maintan_status:
                     print("Invalid Status... Default status Avaliable is assigned")
                     vehicle.set_maintenance_status("Available")
-        
-                vehicle.set_maintenance_status(status)
+                else:
+                    vehicle.set_maintenance_status(status)
                 price = int(input("Enter Rental Price: "))
                 vehicle.set_rental_price(price)
                 fleet_manager.add_vehicle_to_hub(hub_name, vehicle)
@@ -144,8 +146,16 @@ class EcoRideMain:
                 except FileNotFoundError :
                     print("Invalid filename...Please enter correct filename")
                 
-
             elif choice == "11":
+                filename = input("Enter File name : ")
+                fleet_manager.save_data_to_json_file(filename)
+            
+            elif choice == "12":
+                filename = input("Enter File name : ")
+                fleet_manager.load_from_json_file(filename)
+                print("Data loaded successfully loaded from json file")
+
+            elif choice == "13":
                 print("Exit")
                 break                
                 
