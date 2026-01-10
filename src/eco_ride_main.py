@@ -3,7 +3,23 @@ from fleet_manager import FleetManager
 
 
 class EcoRideMain:
+
+    """
+    This class provides a menu-driven interface that allows users to:
+    - Add hubs
+    - Add electric vehicles to hubs
+    - Search and filter vehicles
+    - Sort vehicles by different attributes
+    - Save and load vehicle data using CSV and JSON files
+    """
+
     def main(self):
+
+        """
+        Displays a menu repeatedly and performs operations based on user input.
+        The method continues execution until the user chooses to exit.
+        """
+         
         print("Welcome to Eco-Ride Urban Mobility System")
 
         fleet_manager = FleetManager()
