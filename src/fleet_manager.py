@@ -5,15 +5,35 @@ from vehicle import ElectricCar, ElectricScooter
 
 class FleetManager:
     def __init__(self):
+
+        """
+        Initializes the FleetManager with an empty dictionary of hubs.
+        Each hub maps to a list of vehicles.
+        """
         self.hubs = {}
 
     def add_hub(self, hub_name):
+
+        """
+        Adds a new hub to the fleet system.
+
+        :param hub_name: Name of the hub to be added
+        """
         if hub_name not in self.hubs:
             self.hubs[hub_name] = []
         else:
             print(f"Hub '{hub_name}' already exists")
 
     def add_vehicle_to_hub(self, hub_name, vehicle):
+
+        """
+        Adds a vehicle to a specific hub after checking for duplicates.
+
+        Duplicate vehicles are identified using the vehicle ID.
+
+        :param hub_name: Name of the hub
+        :param vehicle: ElectricCar or ElectricScooter object
+        """
         if hub_name not in self.hubs:
             print(f"Hub '{hub_name}' does not exist")
             return
@@ -27,9 +47,23 @@ class FleetManager:
         self.hubs[hub_name].append(vehicle)
     
     def search_by_hub(self, hub_name):
+
+        """
+        Retrieves all vehicles present in a given hub.
+
+        :param hub_name: Name of the hub
+        :return: List of vehicles in the hub
+        """
         return self.hubs.get(hub_name, [])
     
     def search_by_percentage(self, battery):
+        
+        """
+        Searches and displays vehicles with battery percentage
+        greater than the specified value across all hubs.
+
+        :param battery: Battery percentage threshold
+        """
         for hub, vehicles in self.hubs.items():
             vehicle = list(filter(lambda v : v.get_battery_percentage() > battery, vehicles))
             found = False 
@@ -43,7 +77,14 @@ class FleetManager:
 
             if not found:
                 print("Vehicle not found")
+    
     def catogarize_vehicles(self):
+
+        """
+        Categorizes vehicles based on their type.
+
+        :return: Dictionary with vehicle type as key and list of vehicles as value
+        """
         category = {}
         for vehicles in self.hubs.values():
             for vehicle in vehicles:
@@ -55,6 +96,12 @@ class FleetManager:
         return category
     
     def count_status(self):
+
+        """
+        Counts vehicles based on their maintenance status.
+
+        :return: Dictionary containing maintenance status counts
+        """
         status = {
             'Available' : 0,
             'On Trip' : 0, 
@@ -70,21 +117,48 @@ class FleetManager:
         return status
     
     def sort_by_model(self, hub_name):
+
+        """
+        Sorts vehicles in a hub by model name (ascending).
+
+        :param hub_name: Name of the hub
+        :return: Sorted list of vehicles
+        """
         vehicles = self.hubs.get(hub_name, [])
 
         return sorted(vehicles, key = lambda v : v.model)
     
     def sort_by_battery_percentage(self, hub_name):
+
+        """
+        Sorts vehicles in a hub by battery percentage (descending).
+
+        :param hub_name: Name of the hub
+        :return: Sorted list of vehicles
+        """
         vehicles = self.hubs.get(hub_name, [])
 
         return sorted(vehicles, key = lambda v : v.get_battery_percentage(), reverse = True)
     
     def sort_by_rental_price(self, hub_name):
+
+        """
+        Sorts vehicles in a hub by rental price (descending).
+
+        :param hub_name: Name of the hub
+        :return: Sorted list of vehicles
+        """
         vehicles = self.hubs.get(hub_name, [])
 
         return sorted(vehicles, key = lambda v : v.get_rental_price(), reverse = True)
     
     def save_to_csv_file(self, filename):
+         
+        """
+        Saves all fleet data to a CSV file.
+
+        :param filename: Name of the CSV file
+        """
         with open(filename, "w", newline = "") as file:
             write = csv.writer(file)
 
@@ -118,6 +192,11 @@ class FleetManager:
     
     def load_from_csv(self, filename):
         
+        """
+        Loads fleet data from a CSV file.
+
+        :param filename: Name of the CSV file
+        """
         with open(filename, "r", newline = "") as file:
             read = csv.DictReader(file)
             for line in read:
@@ -146,6 +225,11 @@ class FleetManager:
     
     def save_data_to_json_file(self, filename):
 
+        """
+        Saves fleet data to a JSON file.
+
+        :param filename: Name of the JSON file
+        """
         data = {}
         for hub, vehicles in self.hubs.items():
             data[hub] = []
@@ -171,6 +255,11 @@ class FleetManager:
     
     def load_from_json_file(self, filename):
         
+        """
+        Loads fleet data from a JSON file.
+
+        :param filename: Name of the JSON file
+        """
         with open(filename, "r") as file:
             data = json.load(file)
 
