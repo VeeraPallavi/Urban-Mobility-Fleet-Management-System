@@ -63,7 +63,6 @@ class Vehicle(ABC):
 
         """
         Returns the maintenance status of the vehicle.
-
         :return: Maintenance status
         """
         return self.__maintenance_status

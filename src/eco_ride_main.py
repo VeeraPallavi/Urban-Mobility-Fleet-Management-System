@@ -93,7 +93,15 @@ class EcoRideMain:
                         print(f"Rental Price : {v.get_rental_price()}")
             
             elif choice == "4":
-                fleet_manager.search_by_percentage(80)
+                vehicles = fleet_manager.search_by_percentage(80)
+
+                if not vehicles:
+                    print("No vehicles found with battery > 80%")
+                else:
+                    for v in vehicles:
+                        print(f"Vehicle ID: {v.vehicle_id}")
+                        print(f"Model: {v.model}")
+                        print(f"Battery: {v.get_battery_percentage()}%")
             
             elif choice == "5":
                 category = fleet_manager.catogarize_vehicles()

@@ -1,6 +1,6 @@
 import csv
 import json
-from vehicle import ElectricCar, ElectricScooter
+from src.vehicle import ElectricCar, ElectricScooter
 
 
 class FleetManager:
@@ -57,26 +57,15 @@ class FleetManager:
         return self.hubs.get(hub_name, [])
     
     def search_by_percentage(self, battery):
+        """Returns vehicles with battery percentage
+           greater than the specified value across all hubs.
+        """
+        result = []
+
+        for vehicles in self.hubs.values():
+            result.extend(filter(lambda v: v.get_battery_percentage() > battery, vehicles))
         
-        """
-        Searches and displays vehicles with battery percentage
-        greater than the specified value across all hubs.
-
-        :param battery: Battery percentage threshold
-        """
-        for hub, vehicles in self.hubs.items():
-            vehicle = list(filter(lambda v : v.get_battery_percentage() > battery, vehicles))
-            found = False 
-            for v in vehicle:
-                if not found :
-                    print(f" Vehicle with battery percentage > 80 found in hub {hub}")
-                    found = True
-                    print(f"Vehicle id : {v.vehicle_id}")
-                    print(f"Model: {v.model}")
-                    print(f"Battery Percentage : {v.get_battery_percentage()}")
-
-            if not found:
-                print("Vehicle not found")
+        return result
     
     def catogarize_vehicles(self):
 
